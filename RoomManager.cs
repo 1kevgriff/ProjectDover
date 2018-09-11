@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace ProjectDover
@@ -31,7 +32,17 @@ namespace ProjectDover
         }
 
         public string CurrentRoomName => CurrentRoom.Name;
-        public string CurrentRoomDescription => CurrentRoom.Description;
+        public bool CurrentRoomHasSeenDescription => CurrentRoom.HasSeenDescription;
+
+        public string CurrentRoomDescription
+        {
+            get
+            {
+                CurrentRoom.HasSeenDescription = true;
+                return CurrentRoom.Description;
+            }
+        }
+
         public string CurrentRoomExits()
         {
             var exitList = new List<string>();
@@ -41,6 +52,40 @@ namespace ProjectDover
             }
 
             return $"Exits: {string.Join(", ", exitList)}";
+        }
+
+        public void Go(Command command)
+        {
+            // north
+            var indexOfExit = -1;
+            switch (command)
+            {
+                case Command.COMMAND_NORTH:
+                    indexOfExit = GetExitFromDirection(Direction.North);
+                    break;
+                case Command.COMMAND_SOUTH:
+                    indexOfExit = GetExitFromDirection(Direction.South);
+                    break;
+                case Command.COMMAND_EAST:
+                    indexOfExit = GetExitFromDirection(Direction.East);
+                    break;
+                case Command.COMMAND_WEST:
+                    indexOfExit = GetExitFromDirection(Direction.West);
+                    break;
+            }
+
+            if (indexOfExit == -1)
+            {
+                Console.WriteLine("You cannot go that way.");
+                return;
+            }
+
+            CurrentRoomId = CurrentRoom.Exits[indexOfExit].TargetRoomId;
+        }
+
+        private int GetExitFromDirection(Direction direction)
+        {
+            return CurrentRoom.Exits.FindIndex(p=> p.Direction == direction);
         }
     }
 }

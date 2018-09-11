@@ -7,6 +7,8 @@ namespace ProjectDover
     {
         public Direction Direction { get; set; }
         public long TargetRoomId { get; set; }
+        public bool Lockable { get; set; }
+        public bool IsLocked { get; set; }
 
         public static string GetDirection(Direction value)
         {

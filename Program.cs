@@ -15,12 +15,17 @@ namespace ProjectDover
                 Console.ForegroundColor = ConsoleColor.White;
                 Console.WriteLine(roomManager.CurrentRoomName);
                 Console.ResetColor();
-                Console.WriteLine(roomManager.CurrentRoomDescription);
+                if (!roomManager.CurrentRoomHasSeenDescription)
+                {
+                    Console.WriteLine(roomManager.CurrentRoomDescription);
+                }
+
                 Console.WriteLine(roomManager.CurrentRoomExits());
                 Console.Write("> ");
                 var inputString = Console.ReadLine();
 
-                switch (parser.ProcessCommandText(inputString))
+                var command = parser.ProcessCommandText(inputString);
+                switch (command)
                 {
                     case Command.COMMAND_QUIT:
                         {
@@ -29,8 +34,15 @@ namespace ProjectDover
                             Environment.Exit(0);
                         }
                         break;
-
-                    case Command.UNKNOWN:
+                    case Command.COMMAND_NORTH:
+                    case Command.COMMAND_SOUTH:
+                    case Command.COMMAND_EAST:
+                    case Command.COMMAND_WEST:
+                    {
+                        roomManager.Go(command);
+                    }
+                        break;
+                    case Command.COMMAND_HANDLED: break;
                     default:
                         {
                             Console.WriteLine();

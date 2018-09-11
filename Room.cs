@@ -8,5 +8,6 @@ namespace ProjectDover
         public string Name { get; set; }
         public string Description { get; set; }
         public List<Exit> Exits { get; set; }
+        public bool HasSeenDescription { get; set; }
     }
 }
