@@ -11,7 +11,6 @@ namespace ProjectDover
                 Console.WriteLine("Did you mean `quit`?");
                 return Command.COMMAND_HANDLED;
             }
-            }
 
             if (commandText.Equals("QUIT", StringComparison.OrdinalIgnoreCase))
             {
