@@ -42,6 +42,11 @@ namespace ProjectDover
                         roomManager.Go(command);
                     }
                         break;
+                    case Command.COMMAND_LOOK:
+                        {
+                            roomManager.Do(command);
+                        }
+                        break;
                     case Command.COMMAND_HANDLED: break;
                     default:
                         {

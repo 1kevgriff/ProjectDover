@@ -27,7 +27,16 @@ namespace ProjectDover
                 Id = 1,
                 Name = "Inside Brady's House",
                 Description = "The inside is even nicer than the outside.  $4000 of electronic equipment sit on a table.",
-                Exits = new List<Exit>() { new Exit() { Direction = Direction.South, TargetRoomId = 0 } }
+                Exits = new List<Exit>() { new Exit() { Direction = Direction.South, TargetRoomId = 0 }, new Exit() { Direction = Direction.East, TargetRoomId = 2 } }
+            });
+            Rooms.Add(new Room()
+            {
+                Id = 2,
+                Name = "Living Room",
+                Description = "Nice cozy living room. On the North wall there is a mirror.",
+                Exits = new List<Exit>() { new Exit() { Direction = Direction.West, TargetRoomId = 1 } },
+                Items = new List<Item>() { new Item() { Name = "Mirror", Description = "Regular mirror, where you can see yourself."} }
+                //TODO: trigger character creation event!
             });
         }
 
@@ -81,6 +90,17 @@ namespace ProjectDover
             }
 
             CurrentRoomId = CurrentRoom.Exits[indexOfExit].TargetRoomId;
+        }
+
+        public void Do(Command command) {
+            
+            switch (command)
+            {
+                case Command.COMMAND_LOOK:
+                    Console.WriteLine(CurrentRoomDescription);
+                    break;
+            }
+
         }
 
         private int GetExitFromDirection(Direction direction)

@@ -20,7 +20,7 @@ namespace ProjectDover
             if (commandText.Equals("LOOK", StringComparison.OrdinalIgnoreCase)
                 || commandText.Equals("L", StringComparison.OrdinalIgnoreCase))
             {
-                return Command.COMMAND_NORTH;
+                return Command.COMMAND_LOOK;
             }
 
             if (commandText.Equals("NORTH", StringComparison.OrdinalIgnoreCase) 
