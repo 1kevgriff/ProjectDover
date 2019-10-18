@@ -1,16 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace ProjectDover
 {
-    public class Room
+    public class Item
     {
         public long Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public List<Exit> Exits { get; set; }
-
-        public Inventory Inventory { get; set; }
-
         public bool HasSeenDescription { get; set; }
+
+        //TODO: add states
     }
 }

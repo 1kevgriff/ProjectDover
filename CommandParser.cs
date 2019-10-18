@@ -11,7 +11,6 @@ namespace ProjectDover
                 Console.WriteLine("Did you mean `quit`?");
                 return Command.COMMAND_HANDLED;
             }
-            }
 
             if (commandText.Equals("QUIT", StringComparison.OrdinalIgnoreCase))
             {
@@ -21,7 +20,7 @@ namespace ProjectDover
             if (commandText.Equals("LOOK", StringComparison.OrdinalIgnoreCase)
                 || commandText.Equals("L", StringComparison.OrdinalIgnoreCase))
             {
-                return Command.COMMAND_NORTH;
+                return Command.COMMAND_LOOK;
             }
 
             if (commandText.Equals("NORTH", StringComparison.OrdinalIgnoreCase) 
@@ -43,6 +42,23 @@ namespace ProjectDover
                 || commandText.Equals("W", StringComparison.OrdinalIgnoreCase))
             {
                 return Command.COMMAND_WEST;
+            }
+            if (commandText.Equals("INVENTORY", StringComparison.OrdinalIgnoreCase)
+                || commandText.Equals("I", StringComparison.OrdinalIgnoreCase))
+            {
+                return Command.COMMAND_INVENTORY;
+            }
+
+
+            // == Interaction commands ====
+            if(commandText.StartsWith("TAKE", StringComparison.OrdinalIgnoreCase)
+                || commandText.Equals("T", StringComparison.OrdinalIgnoreCase)){
+
+                if(commandText.Split(' ').Length > 1){
+                    return Command.COMMAND_TAKE;
+                }
+                Console.WriteLine("What do you want to take?");
+                return Command.COMMAND_HANDLED;
             }
 
             return Command.UNKNOWN;
