@@ -7,20 +7,31 @@ namespace ProjectDover
 {
     public class Inventory
     {
-        public string name { get; set; }
+        public string Name { get; set; }
         public List<Item> Items { get; set; }
+
+        public Inventory(string name){
+            Name = name;
+            Items = new List<Item>();
+        }
+
+        public Item RemoveItem(string itemName)
+        {
+            Item item = Items.First(i => i.Name.Equals(itemName, StringComparison.OrdinalIgnoreCase));
+            return RemoveItem(item);
+        }
 
         public Item RemoveItem(Item item)
         {
             Items.Remove(item);
-            Console.WriteLine($"The {item} was removed from {name}.");
+            Console.WriteLine($"The {item.Name} was removed from {Name}.");
             return item;
         }
 
         public void AddItem(Item item)
         {
             Items.Add(item);
-            Console.WriteLine($"The {item} was added to {name}.");
+            Console.WriteLine($"The {item.Name} was added to {Name}.");
         }
 
         public void ListItems()
@@ -34,10 +45,10 @@ namespace ProjectDover
             if (itemlist.Length > 0)
             {
                 itemlist.Remove(itemlist.Length - 2, 2);
-                Console.WriteLine($"{name} contains {itemlist.ToString()}.");
+                Console.WriteLine($"{Name} contains {itemlist.ToString()}.");
             }
             else {
-                Console.WriteLine($"{name} is empty.");
+                Console.WriteLine($"{Name} is empty.");
             }
         }
 
@@ -54,8 +65,12 @@ namespace ProjectDover
             }
             else
             {
-                Console.WriteLine($"The {itemName} was not found into {name}.");
+                Console.WriteLine($"The {itemName} was not found into {Name}.");
             }
+        }
+
+        public bool Contains(string itemName){
+            return Items.Any(i => i.Name.Equals(itemName, StringComparison.OrdinalIgnoreCase));
         }
     }
 

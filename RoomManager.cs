@@ -33,9 +33,14 @@ namespace ProjectDover
             {
                 Id = 2,
                 Name = "Living Room",
-                Description = "Nice cozy living room. On the North wall there is a mirror.",
+                Description = "Nice cozy living room. On the North wall there is a mirror. And a flashlight on the table in the middle of the room.",
                 Exits = new List<Exit>() { new Exit() { Direction = Direction.West, TargetRoomId = 1 } },
-                Items = new List<Item>() { new Item() { Name = "Mirror", Description = "Regular mirror, where you can see yourself."} }
+                Inventory = new Inventory("Living Room") {   
+                    Items = new List<Item>(){
+                            new Item() { Name = "Mirror", Description = "Regular mirror, where you can see yourself."},
+                            new Item() { Name = "flashlight", Description = "Regular basic flashlight."} 
+                    }
+                }
                 //TODO: trigger character creation event!
             });
         }
@@ -106,6 +111,10 @@ namespace ProjectDover
         private int GetExitFromDirection(Direction direction)
         {
             return CurrentRoom.Exits.FindIndex(p=> p.Direction == direction);
+        }
+
+        public Inventory CurrentRoomInventory(){
+            return CurrentRoom.Inventory;
         }
     }
 }

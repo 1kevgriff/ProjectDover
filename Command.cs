@@ -9,6 +9,8 @@ namespace ProjectDover
         COMMAND_SOUTH,
         COMMAND_EAST,
         COMMAND_WEST,
-        COMMAND_LOOK
+        COMMAND_LOOK,
+        COMMAND_TAKE,
+        COMMAND_INVENTORY
     }
 }

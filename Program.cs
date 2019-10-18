@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace ProjectDover
 {
@@ -8,6 +9,7 @@ namespace ProjectDover
         {
             var parser = new CommandParser();
             var roomManager = new RoomManager();
+            var inventory = new Inventory("Your Inventory");
 
             while (true)
             {
@@ -45,6 +47,22 @@ namespace ProjectDover
                     case Command.COMMAND_LOOK:
                         {
                             roomManager.Do(command);
+                        }
+                        break;
+                    case Command.COMMAND_INVENTORY:
+                        {
+                            inventory.ListItems();
+                        }
+                        break;
+                    case Command.COMMAND_TAKE:
+                        {
+                            Inventory roomInventory = roomManager.CurrentRoomInventory();
+                            string itemName = inputString.Split(' ')[1];
+                
+                            if(roomInventory.Contains(itemName)){
+                                Item currentItem = roomInventory.RemoveItem(itemName);
+                                inventory.AddItem(currentItem);
+                            }
                         }
                         break;
                     case Command.COMMAND_HANDLED: break;

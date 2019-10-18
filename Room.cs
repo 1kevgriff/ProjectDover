@@ -9,7 +9,7 @@ namespace ProjectDover
         public string Description { get; set; }
         public List<Exit> Exits { get; set; }
 
-        public List<Item> Items { get; set; }
+        public Inventory Inventory { get; set; }
 
         public bool HasSeenDescription { get; set; }
     }
