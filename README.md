@@ -18,4 +18,4 @@ Text-based adventure game, in a near future where you and your glasses companion
 	- .Net Core v3
 	- Some data store (file, database)
 
-![Image of a man wearing black glasses behind a laptop](medias/Text-Based Game.png)
+![Image of a man wearing black glasses behind a laptop](medias/Text-Based-Game.png)
