@@ -2,7 +2,7 @@
 
 # ProjectDover (aka Blind 2021)
 
-<img scr="medias/Text-Based-Game.png" alt="Image of a man wearing black glasses behind a laptop" style="max-width:70%;">
+<img scr="medias/Text-Based-Game.png" alt="Image of a man wearing black glasses behind a laptop" style="max-width:70%;" />
 
 Kevin's & Frank's attempt to write a classic adventure with modern tools.
 
@@ -10,14 +10,14 @@ Kevin's & Frank's attempt to write a classic adventure with modern tools.
 A text-based adventure game, in a near-future where you and your glasses companion are exploring your environment.  We will use AI to simplify the commands. This way "take flashlight" could be "grab the light", "pick up the flashlight"; accept more "humans" commands and the AI will translate to game commands. 
 
 ### Thoughts 
-    - You are blind
-    - Companion glasses are "talking" to you.  Named: "B"
-    - Amnesia?
-	- Inclusive
-    - A narrator (maybe your glasses) summarize "your" journey at the beginning.
-    - Could go voice
-    - The game can be played on-prem or from a webpage
-	- Multi-languages: English, French, etc.
+- You are blind
+- Companion glasses are "talking" to you.  Named: "B"
+- Amnesia?
+- Inclusive
+- A narrator (maybe your glasses) summarize "your" journey at the beginning.
+- Could go voice
+- The game can be played on-prem or from a webpage
+- Multi-languages: English, French, etc.
 
 ## Work Status / Board
 
