@@ -2,7 +2,7 @@
 
 # ProjectDover (aka Blind 2021)
 
-<img scr="https://github.com/FBoucher/ProjectDover/blob/a5a30ac6c8cdcd1d3ca822e50e75902be0f9e300/medias/Text-Based-Game.png" alt="Image of a man wearing black glasses behind a laptop" style="max-width:70%;" />
+![Image of a man wearing black glasses behind a laptop](medias/Text-Based-Game_800.png)
 
 Kevin's & Frank's attempt to write a classic adventure with modern tools.
 
