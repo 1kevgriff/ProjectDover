@@ -26,4 +26,5 @@
 - Save/Load
   - dump the current game state
   - don't care about security
+  - Begin display summary of the story
   
