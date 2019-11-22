@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace ProjectDover
@@ -10,6 +11,7 @@ namespace ProjectDover
             var parser = new CommandParser();
             var roomManager = new RoomManager();
             var inventory = new Inventory("Your Inventory");
+            List<string> KeyEvents = new List<string>();
 
             while (true)
             {
@@ -63,7 +65,10 @@ namespace ProjectDover
                                 Item currentItem = roomInventory.RemoveItem(itemName);
 
                                 if(currentItem.Triggers.ContainsKey("take")){
-                                    roomManager.ProcessTrigger(currentItem.Triggers["take"]);
+                                    string keyEvent = roomManager.ProcessTrigger(currentItem,"take");
+                                    if(!String.IsNullOrEmpty(keyEvent)){
+                                        KeyEvents.Add(keyEvent);
+                                    }
                                 }
 
                                 inventory.AddItem(currentItem);
