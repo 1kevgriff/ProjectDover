@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace ProjectDover
 {
@@ -11,6 +9,8 @@ namespace ProjectDover
         public string Description { get; set; }
         public bool HasSeenDescription { get; set; }
 
+        public Dictionary<string,string> Triggers {get; set;}
+        
         //TODO: add states
     }
 }
