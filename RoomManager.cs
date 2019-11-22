@@ -27,7 +27,9 @@ namespace ProjectDover
                 Id = 1,
                 Name = "Inside Brady's House",
                 Description = "The inside is even nicer than the outside.  $4000 of electronic equipment sit on a table.",
-                Exits = new List<Exit>() { new Exit() { Direction = Direction.South, TargetRoomId = 0 }, new Exit() { Direction = Direction.East, TargetRoomId = 2 } }
+                Exits = new List<Exit>() {  new Exit() { Direction = Direction.South, TargetRoomId = 0 }, 
+                                            new Exit() { Direction = Direction.East, TargetRoomId = 2 },
+                                            new Exit() { Direction = Direction.West, TargetRoomId = 3 } }
             });
             Rooms.Add(new Room()
             {
@@ -38,10 +40,23 @@ namespace ProjectDover
                 Inventory = new Inventory("Living Room") {   
                     Items = new List<Item>(){
                             new Item() { Name = "Mirror", Description = "Regular mirror, where you can see yourself."},
-                            new Item() { Name = "flashlight", Description = "Regular basic flashlight."} 
+                            new Item() { Name = "flashlight", 
+                                         Description = "Regular basic flashlight.", 
+                                         Triggers = new Dictionary<string,string>() {{"take","noFlashlight"}}
+                                        } 
                     }
+                },
+                PotentialDescription = new Dictionary<string,string>() {
+                    {"noFlashlight", "Nice cozy living room. On the North wall there is a mirror. And a the table in the middle of the room."}
                 }
                 //TODO: trigger character creation event!
+            });
+            Rooms.Add(new Room()
+            {
+                Id = 3,
+                Name = "Master Bedroom",
+                Description = "Nice luxurious bedroom. The perfect place for Brady to rest and retreive his voice.",
+                Exits = new List<Exit>() { new Exit() { Direction = Direction.East, TargetRoomId = 1 } }
             });
         }
 
@@ -115,6 +130,10 @@ namespace ProjectDover
 
         public Inventory CurrentRoomInventory(){
             return CurrentRoom.Inventory;
+        }
+
+        public void ProcessTrigger(string trigger){
+            CurrentRoom.Description = CurrentRoom.PotentialDescription[trigger];
         }
     }
 }

@@ -61,6 +61,11 @@ namespace ProjectDover
                 
                             if(roomInventory.Contains(itemName)){
                                 Item currentItem = roomInventory.RemoveItem(itemName);
+
+                                if(currentItem.Triggers.ContainsKey("take")){
+                                    roomManager.ProcessTrigger(currentItem.Triggers["take"]);
+                                }
+
                                 inventory.AddItem(currentItem);
                             }
                         }
