@@ -40,8 +40,14 @@ namespace ProjectDover
                 Inventory = new Inventory("Living Room") {   
                     Items = new List<Item>(){
                             new Item() { Name = "Mirror", Description = "Regular mirror, where you can see yourself."},
-                            new Item() { Name = "flashlight", Description = "Regular basic flashlight."} 
+                            new Item() { Name = "flashlight", 
+                                         Description = "Regular basic flashlight.", 
+                                         Triggers = new Dictionary<string,string>() {{"take","noFlashlight"}}
+                                        } 
                     }
+                },
+                PotentialDescription = new Dictionary<string,string>() {
+                    {"noFlashlight", "Nice cozy living room. On the North wall there is a mirror. And a the table in the middle of the room."}
                 }
                 //TODO: trigger character creation event!
             });
@@ -124,6 +130,10 @@ namespace ProjectDover
 
         public Inventory CurrentRoomInventory(){
             return CurrentRoom.Inventory;
+        }
+
+        public void ProcessTrigger(string trigger){
+            CurrentRoom.Description = CurrentRoom.PotentialDescription[trigger];
         }
     }
 }
