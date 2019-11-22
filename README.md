@@ -37,6 +37,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- prettier-ignore -->
 <table>
   <tr>
+    <td align="center"><a href="http://cloud5mins.com"><img src="https://avatars3.githubusercontent.com/u/2404846?v=4" width="100px;" alt="Frank Boucher"/><br /><sub><b>Frank Boucher</b></sub></a><br /><a href="https://github.com/FBoucher/ProjectDover/commits?author=FBoucher" title="Code">💻</a> <a href="#video-FBoucher" title="Videos">📹</a> <a href="#ideas-FBoucher" title="Ideas, Planning, & Feedback">🤔</a></td>
     <td align="center"><a href="http://www.kevgriffin.com"><img src="https://avatars2.githubusercontent.com/u/708542?v=4" width="100px;" alt="Kevin Griffin"/><br /><sub><b>Kevin Griffin</b></sub></a><br /><a href="https://github.com/FBoucher/ProjectDover/commits?author=1kevgriff" title="Code">💻</a> <a href="#video-1kevgriff" title="Videos">📹</a> <a href="#ideas-1kevgriff" title="Ideas, Planning, & Feedback">🤔</a></td>
   </tr>
 </table>
