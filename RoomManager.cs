@@ -27,7 +27,9 @@ namespace ProjectDover
                 Id = 1,
                 Name = "Inside Brady's House",
                 Description = "The inside is even nicer than the outside.  $4000 of electronic equipment sit on a table.",
-                Exits = new List<Exit>() { new Exit() { Direction = Direction.South, TargetRoomId = 0 }, new Exit() { Direction = Direction.East, TargetRoomId = 2 } }
+                Exits = new List<Exit>() {  new Exit() { Direction = Direction.South, TargetRoomId = 0 }, 
+                                            new Exit() { Direction = Direction.East, TargetRoomId = 2 },
+                                            new Exit() { Direction = Direction.West, TargetRoomId = 3 } }
             });
             Rooms.Add(new Room()
             {
@@ -42,6 +44,13 @@ namespace ProjectDover
                     }
                 }
                 //TODO: trigger character creation event!
+            });
+            Rooms.Add(new Room()
+            {
+                Id = 3,
+                Name = "Master Bedroom",
+                Description = "Nice luxurious bedroom. The perfect place for Brady to rest and retreive his voice.",
+                Exits = new List<Exit>() { new Exit() { Direction = Direction.East, TargetRoomId = 1 } }
             });
         }
 
