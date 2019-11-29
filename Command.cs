@@ -11,6 +11,8 @@ namespace ProjectDover
         COMMAND_WEST,
         COMMAND_LOOK,
         COMMAND_TAKE,
-        COMMAND_INVENTORY
+        COMMAND_INVENTORY,
+        COMMAND_SUMMARY
+    
     }
 }
