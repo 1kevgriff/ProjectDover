@@ -10,6 +10,8 @@ namespace ProjectDover
         private long CurrentRoomId { get; set; }
         private Room CurrentRoom { get { return Rooms.First(p => p.Id == CurrentRoomId); } }
 
+        private int visitedRoomCounter { get; set; }
+
         public RoomManager()
         {
             CurrentRoomId = 0;
@@ -27,7 +29,7 @@ namespace ProjectDover
                 Id = 1,
                 Name = "Inside Brady's House",
                 Description = "The inside is even nicer than the outside.  $4000 of electronic equipment sit on a table.",
-                Exits = new List<Exit>() {  new Exit() { Direction = Direction.South, TargetRoomId = 0 }, 
+                Exits = new List<Exit>() {  new Exit() { Direction = Direction.South, TargetRoomId = 0 },
                                             new Exit() { Direction = Direction.East, TargetRoomId = 2 },
                                             new Exit() { Direction = Direction.West, TargetRoomId = 3 } }
             });
@@ -37,16 +39,18 @@ namespace ProjectDover
                 Name = "Living Room",
                 Description = "Nice cozy living room. On the North wall there is a mirror. And a flashlight on the table in the middle of the room.",
                 Exits = new List<Exit>() { new Exit() { Direction = Direction.West, TargetRoomId = 1 } },
-                Inventory = new Inventory("Living Room") {   
+                Inventory = new Inventory("Living Room")
+                {
                     Items = new List<Item>(){
                             new Item() { Name = "Mirror", Description = "Regular mirror, where you can see yourself."},
-                            new Item() { Name = "flashlight", 
-                                         Description = "Regular basic flashlight.", 
-                                         Triggers = new Dictionary<string,string>() {{"take","noFlashlight"}}
-                                        } 
+                            new Item() { Name = "flashlight",
+                                         Description = "Regular basic flashlight.",
+                                         Triggers = new Dictionary<string,string>() {{"take","noFlashlight"}},
+                                         KeyEvents = new Dictionary<string,string>() {{"take","You found the Flashlight."}}
+                                        }
                     }
                 },
-                PotentialDescription = new Dictionary<string,string>() {
+                PotentialDescription = new Dictionary<string, string>() {
                     {"noFlashlight", "Nice cozy living room. On the North wall there is a mirror. And a the table in the middle of the room."}
                 }
                 //TODO: trigger character creation event!
@@ -68,6 +72,7 @@ namespace ProjectDover
             get
             {
                 CurrentRoom.HasSeenDescription = true;
+                visitedRoomCounter++;
                 return CurrentRoom.Description;
             }
         }
@@ -112,8 +117,9 @@ namespace ProjectDover
             CurrentRoomId = CurrentRoom.Exits[indexOfExit].TargetRoomId;
         }
 
-        public void Do(Command command) {
-            
+        public void Do(Command command)
+        {
+
             switch (command)
             {
                 case Command.COMMAND_LOOK:
@@ -125,15 +131,33 @@ namespace ProjectDover
 
         private int GetExitFromDirection(Direction direction)
         {
-            return CurrentRoom.Exits.FindIndex(p=> p.Direction == direction);
+            return CurrentRoom.Exits.FindIndex(p => p.Direction == direction);
         }
 
-        public Inventory CurrentRoomInventory(){
+        public Inventory CurrentRoomInventory()
+        {
             return CurrentRoom.Inventory;
         }
 
-        public void ProcessTrigger(string trigger){
-            CurrentRoom.Description = CurrentRoom.PotentialDescription[trigger];
+        public string ProcessTrigger(Item currentItem, string triggerName)
+        {
+            CurrentRoom.Description = CurrentRoom.PotentialDescription[currentItem.Triggers[triggerName]];
+
+            if (currentItem.KeyEvents.ContainsKey(triggerName))
+            {
+                return currentItem.KeyEvents[triggerName];
+            }
+            return string.Empty;
+        }
+
+        public string MapCoverage(){
+            if(Rooms.Count > 0 ){
+                var result = ((double)visitedRoomCounter/Rooms.Count);
+                var mapCoverage =  result * 100;
+                return string. Format("You have seen {0}% of the map.", mapCoverage.ToString());
+            }
+
+            return "It looks like you just start. No map coverage available yet.";
         }
     }
 }

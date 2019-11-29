@@ -49,6 +49,11 @@ namespace ProjectDover
                 return Command.COMMAND_INVENTORY;
             }
 
+            if (commandText.Equals("SUMMARY", StringComparison.OrdinalIgnoreCase)
+                || commandText.Equals("X", StringComparison.OrdinalIgnoreCase))
+            {
+                return Command.COMMAND_SUMMARY;
+            }
 
             // == Interaction commands ====
             if(commandText.StartsWith("TAKE", StringComparison.OrdinalIgnoreCase)
@@ -60,6 +65,7 @@ namespace ProjectDover
                 Console.WriteLine("What do you want to take?");
                 return Command.COMMAND_HANDLED;
             }
+
 
             return Command.UNKNOWN;
         }
