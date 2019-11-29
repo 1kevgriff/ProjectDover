@@ -10,6 +10,8 @@ namespace ProjectDover
         private long CurrentRoomId { get; set; }
         private Room CurrentRoom { get { return Rooms.First(p => p.Id == CurrentRoomId); } }
 
+        private int visitedRoomCounter { get; set; }
+
         public RoomManager()
         {
             CurrentRoomId = 0;
@@ -44,7 +46,7 @@ namespace ProjectDover
                             new Item() { Name = "flashlight",
                                          Description = "Regular basic flashlight.",
                                          Triggers = new Dictionary<string,string>() {{"take","noFlashlight"}},
-                                         KeyEvents = new Dictionary<string,string>() {{"take","You found the Flashlight"}}
+                                         KeyEvents = new Dictionary<string,string>() {{"take","You found the Flashlight."}}
                                         }
                     }
                 },
@@ -70,6 +72,7 @@ namespace ProjectDover
             get
             {
                 CurrentRoom.HasSeenDescription = true;
+                visitedRoomCounter++;
                 return CurrentRoom.Description;
             }
         }
@@ -145,6 +148,16 @@ namespace ProjectDover
                 return currentItem.KeyEvents[triggerName];
             }
             return string.Empty;
+        }
+
+        public string MapCoverage(){
+            if(Rooms.Count > 0 ){
+                var result = ((double)visitedRoomCounter/Rooms.Count);
+                var mapCoverage =  result * 100;
+                return string. Format("You have seen {0}% of the map.", mapCoverage.ToString());
+            }
+
+            return "It looks like you just start. No map coverage available yet.";
         }
     }
 }

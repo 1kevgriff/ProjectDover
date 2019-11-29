@@ -9,22 +9,21 @@ namespace ProjectDover
         static void Main(string[] args)
         {
             var parser = new CommandParser();
-            var roomManager = new RoomManager();
-            var inventory = new Inventory("Your Inventory");
-            List<string> KeyEvents = new List<string>();
+            var GameSession = new GameSession();
+           
 
             while (true)
             {
                 // spit room desc
                 Console.ForegroundColor = ConsoleColor.White;
-                Console.WriteLine(roomManager.CurrentRoomName);
+                Console.WriteLine(GameSession.RoomManager.CurrentRoomName);
                 Console.ResetColor();
-                if (!roomManager.CurrentRoomHasSeenDescription)
+                if (!GameSession.RoomManager.CurrentRoomHasSeenDescription)
                 {
-                    Console.WriteLine(roomManager.CurrentRoomDescription);
+                    Console.WriteLine(GameSession.RoomManager.CurrentRoomDescription);
                 }
 
-                Console.WriteLine(roomManager.CurrentRoomExits());
+                Console.WriteLine(GameSession.RoomManager.CurrentRoomExits());
                 Console.Write("> ");
                 var inputString = Console.ReadLine();
 
@@ -43,36 +42,41 @@ namespace ProjectDover
                     case Command.COMMAND_EAST:
                     case Command.COMMAND_WEST:
                     {
-                        roomManager.Go(command);
+                        GameSession.RoomManager.Go(command);
                     }
                         break;
                     case Command.COMMAND_LOOK:
                         {
-                            roomManager.Do(command);
+                            GameSession.RoomManager.Do(command);
                         }
                         break;
                     case Command.COMMAND_INVENTORY:
                         {
-                            inventory.ListItems();
+                            GameSession.Inventory.ListItems();
                         }
                         break;
                     case Command.COMMAND_TAKE:
                         {
-                            Inventory roomInventory = roomManager.CurrentRoomInventory();
+                            Inventory roomInventory = GameSession.RoomManager.CurrentRoomInventory();
                             string itemName = inputString.Split(' ')[1];
                 
                             if(roomInventory.Contains(itemName)){
                                 Item currentItem = roomInventory.RemoveItem(itemName);
 
                                 if(currentItem.Triggers.ContainsKey("take")){
-                                    string keyEvent = roomManager.ProcessTrigger(currentItem,"take");
+                                    string keyEvent = GameSession.RoomManager.ProcessTrigger(currentItem,"take");
                                     if(!String.IsNullOrEmpty(keyEvent)){
-                                        KeyEvents.Add(keyEvent);
+                                        GameSession.KeyEvents.Add(keyEvent);
                                     }
                                 }
 
-                                inventory.AddItem(currentItem);
+                                GameSession.Inventory.AddItem(currentItem);
                             }
+                        }
+                        break;
+                    case Command.COMMAND_SUMMARY:
+                        {
+                            Console.WriteLine(GameSession.Summary());
                         }
                         break;
                     case Command.COMMAND_HANDLED: break;
