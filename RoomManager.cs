@@ -1,44 +1,45 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using MongoDB.Driver;
 
 namespace ProjectDover
 {
     public class RoomManager
     {
         private List<Room> Rooms { get; set; }
-        private long CurrentRoomId { get; set; }
+        private string CurrentRoomId { get; set; }
         private Room CurrentRoom { get { return Rooms.First(p => p.Id == CurrentRoomId); } }
 
         private int visitedRoomCounter { get; set; }
 
         public RoomManager()
         {
-            CurrentRoomId = 0;
+            CurrentRoomId = "999";
 
             Rooms = new List<Room>();
             Rooms.Add(new Room()
             {
-                Id = 0,
+                Id = "999",
                 Name = "Outside Brady's House",
                 Description = "Brady has an extremely loved home.  There are even trees and flowers.  On your left, there is a truck up on some blocks.",
-                Exits = new List<Exit>() { new Exit() { Direction = Direction.North, TargetRoomId = 1 } }
+                Exits = new List<Exit>() { new Exit() { Direction = Direction.North, TargetRoomId = "1" } }
             });
             Rooms.Add(new Room()
             {
-                Id = 1,
+                Id = "1",
                 Name = "Inside Brady's House",
                 Description = "The inside is even nicer than the outside.  $4000 of electronic equipment sit on a table.",
-                Exits = new List<Exit>() {  new Exit() { Direction = Direction.South, TargetRoomId = 0 },
-                                            new Exit() { Direction = Direction.East, TargetRoomId = 2 },
-                                            new Exit() { Direction = Direction.West, TargetRoomId = 3 } }
+                Exits = new List<Exit>() {  new Exit() { Direction = Direction.South, TargetRoomId = "999" },
+                                            new Exit() { Direction = Direction.East, TargetRoomId = "2" },
+                                            new Exit() { Direction = Direction.West, TargetRoomId = "3" } }
             });
             Rooms.Add(new Room()
             {
-                Id = 2,
+                Id = "2",
                 Name = "Living Room",
                 Description = "Nice cozy living room. On the North wall there is a mirror. And a flashlight on the table in the middle of the room.",
-                Exits = new List<Exit>() { new Exit() { Direction = Direction.West, TargetRoomId = 1 } },
+                Exits = new List<Exit>() { new Exit() { Direction = Direction.West, TargetRoomId = "1" } },
                 Inventory = new Inventory("Living Room")
                 {
                     Items = new List<Item>(){
@@ -57,11 +58,14 @@ namespace ProjectDover
             });
             Rooms.Add(new Room()
             {
-                Id = 3,
+                Id = "3",
                 Name = "Master Bedroom",
                 Description = "Nice luxurious bedroom. The perfect place for Brady to rest and retreive his voice.",
-                Exits = new List<Exit>() { new Exit() { Direction = Direction.East, TargetRoomId = 1 } }
+                Exits = new List<Exit>() { new Exit() { Direction = Direction.East, TargetRoomId = "1" } }
             });
+
+            LoadMap();
+            //CreateMap();
         }
 
         public string CurrentRoomName => CurrentRoom.Name;
@@ -159,5 +163,37 @@ namespace ProjectDover
 
             return "It looks like you just start. No map coverage available yet.";
         }
+
+
+        public void CreateMap(){
+
+            IMongoCollection<Room> _rooms;
+
+            var client = new MongoClient("mongodb://localhost:27017");
+            var database = client.GetDatabase("Blind2021Db");
+
+            _rooms = database.GetCollection<Room>("Rooms");
+
+            foreach(var room in Rooms){
+                _rooms.InsertOne(room);
+            }
+
+
+        }
+
+        public void LoadMap(){
+
+             IMongoCollection<Room> _rooms;
+
+            var client = new MongoClient("mongodb://localhost:27017");
+            var database = client.GetDatabase("Blind2021Db");
+
+            _rooms = database.GetCollection<Room>("Rooms");
+
+            var map =  _rooms.Find(room => true).ToList();
+
+            var test = map.Count();
+        }
+
     }
 }

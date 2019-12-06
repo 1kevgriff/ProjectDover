@@ -6,7 +6,7 @@ namespace ProjectDover
     public class Exit
     {
         public Direction Direction { get; set; }
-        public long TargetRoomId { get; set; }
+        public string TargetRoomId { get; set; }
         public bool Lockable { get; set; }
         public bool IsLocked { get; set; }
 
