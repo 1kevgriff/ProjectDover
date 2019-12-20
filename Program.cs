@@ -1,15 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace ProjectDover
 {
     class Program
     {
-        static void Main(string[] args)
+        static private void Main(string[] args)
         {
+            GameType gameType = Introduction();
+
             var parser = new CommandParser();
-            var GameSession = new GameSession();
+            var GameSession = new GameSession(gameType);
            
 
             while (true)
@@ -88,6 +91,23 @@ namespace ProjectDover
                         break;
                 }
             }
+        }
+
+        static private GameType Introduction(){
+
+            Console.Clear();
+            Console.WriteLine("-=Welcome to Blind2021=-");
+            Console.WriteLine("This is a text based adventure game... as you can see ;)");
+
+            Console.WriteLine("Do you want to:");
+            Console.WriteLine("1 - Start a New Game.");
+            Console.WriteLine("2 - Load a Saved Game.");
+            
+            var inputString = Console.ReadLine();
+
+            var selectedGameType = GameTypeParser.ProcessGameTypeText(inputString);
+
+            return selectedGameType;
         }
     }
 }

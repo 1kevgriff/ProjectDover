@@ -7,15 +7,28 @@ namespace ProjectDover
 {
     public class GameSession
     {
+        public string Id{ get; set; }
         public RoomManager RoomManager { get; set; }
         public Inventory Inventory{ get; set; }
         public List<string> KeyEvents{ get; set; }
         
 
-        public GameSession(){
-            RoomManager = new RoomManager();
-            Inventory = new Inventory("Player Inventory");
-            KeyEvents = new List<string>();
+        public GameSession(GameType gameType){
+
+
+            if(gameType == GameType.LOADED_GAME){
+                //TODO: load from database
+                Id = new Guid().ToString();
+                RoomManager = new RoomManager(gameType);
+                Inventory = new Inventory("Player Inventory");
+                KeyEvents = new List<string>();
+            }
+            else{
+                Id = new Guid().ToString();
+                RoomManager = new RoomManager(gameType);
+                Inventory = new Inventory("Player Inventory");
+                KeyEvents = new List<string>();
+            }
         }
 
         public string Summary(){
