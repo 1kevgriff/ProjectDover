@@ -55,6 +55,12 @@ namespace ProjectDover
                 return Command.COMMAND_SUMMARY;
             }
 
+            if (commandText.Equals("SAVE", StringComparison.OrdinalIgnoreCase)
+                || commandText.Equals("V", StringComparison.OrdinalIgnoreCase))
+            {
+                return Command.COMMAND_SAVE;
+            }
+
             // == Interaction commands ====
             if(commandText.StartsWith("TAKE", StringComparison.OrdinalIgnoreCase)
                 || commandText.Equals("T", StringComparison.OrdinalIgnoreCase)){

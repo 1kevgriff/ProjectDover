@@ -1,0 +1,104 @@
+[
+    {
+        "Id": "0",
+        "Name": "Outside Brady\u0027s House",
+        "Description": "Brady has an extremely loved home.  There are even trees and flowers.  On your left, there is a truck up on some blocks.",
+        "PotentialDescription": null,
+        "Exits": [
+            {
+                "Direction": 0,
+                "TargetRoomId": "1",
+                "Lockable": false,
+                "IsLocked": false
+            }
+        ],
+        "Inventory": null,
+        "HasSeenDescription": false
+    },
+    {
+        "Id": "1",
+        "Name": "Inside Brady\u0027s House",
+        "Description": "The inside is even nicer than the outside.  $4000 of electronic equipment sit on a table.",
+        "PotentialDescription": null,
+        "Exits": [
+            {
+                "Direction": 1,
+                "TargetRoomId": "0",
+                "Lockable": false,
+                "IsLocked": false
+            },
+            {
+                "Direction": 2,
+                "TargetRoomId": "2",
+                "Lockable": false,
+                "IsLocked": false
+            },
+            {
+                "Direction": 3,
+                "TargetRoomId": "3",
+                "Lockable": false,
+                "IsLocked": false
+            }
+        ],
+        "Inventory": null,
+        "HasSeenDescription": false
+    },
+    {
+        "Id": "2",
+        "Name": "Living Room",
+        "Description": "Nice cozy living room. On the North wall there is a mirror. And a flashlight on the table in the middle of the room.",
+        "PotentialDescription": {
+            "noFlashlight": "Nice cozy living room. On the North wall there is a mirror. And a the table in the middle of the room."
+        },
+        "Exits": [
+            {
+                "Direction": 3,
+                "TargetRoomId": "1",
+                "Lockable": false,
+                "IsLocked": false
+            }
+        ],
+        "Inventory": {
+            "Name": "Living Room",
+            "Items": [
+                {
+                    "Id": 0,
+                    "Name": "Mirror",
+                    "Description": "Regular mirror, where you can see yourself.",
+                    "HasSeenDescription": false,
+                    "Triggers": null,
+                    "KeyEvents": null
+                },
+                {
+                    "Id": 0,
+                    "Name": "flashlight",
+                    "Description": "Regular basic flashlight.",
+                    "HasSeenDescription": false,
+                    "Triggers": {
+                        "take": "noFlashlight"
+                    },
+                    "KeyEvents": {
+                        "take": "You found the Flashlight."
+                    }
+                }
+            ]
+        },
+        "HasSeenDescription": false
+    },
+    {
+        "Id": "3",
+        "Name": "Master Bedroom",
+        "Description": "Nice luxurious bedroom. The perfect place for Brady to rest and retreive his voice.",
+        "PotentialDescription": null,
+        "Exits": [
+            {
+                "Direction": 2,
+                "TargetRoomId": "1",
+                "Lockable": false,
+                "IsLocked": false
+            }
+        ],
+        "Inventory": null,
+        "HasSeenDescription": false
+    }
+]

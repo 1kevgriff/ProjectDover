@@ -10,6 +10,11 @@ namespace ProjectDover
         public string Name { get; set; }
         public List<Item> Items { get; set; }
 
+        public Inventory(){
+            Name = "RoomItems";
+            Items = new List<Item>();
+        }
+
         public Inventory(string name){
             Name = name;
             Items = new List<Item>();
