@@ -9,8 +9,8 @@ namespace ProjectDover
 {
     public class RoomManager
     {
-        private List<Room> Rooms { get; set; }
-        private string CurrentRoomId { get; set; }
+        public List<Room> Rooms { get; set; }
+        public string CurrentRoomId { get; set; }
         private Room CurrentRoom { get { return Rooms.First(p => p.Id == CurrentRoomId); } }
 
         private int visitedRoomCounter { get; set; }
@@ -70,7 +70,7 @@ namespace ProjectDover
                 LoadMap();
             }
             else{
-                var jsonRooms = File.ReadAllText(@"D:\Dev\GitHub\FBoucher\ProjectDover\data\BradysHouse\rooms.json");
+                var jsonRooms = File.ReadAllText(@".\data\BradysHouse\rooms.json");
                 Rooms = JsonSerializer.Deserialize<List<Room>>(jsonRooms);
             }
         }
@@ -178,7 +178,7 @@ namespace ProjectDover
         public void SaveMap(){
 
             IMongoCollection<Room> _rooms;
-
+            //var connStr = _config["Blind2021DatabaseSettings:ConnectionString"];
             var client = new MongoClient("mongodb://localhost:27017");
             var database = client.GetDatabase("Blind2021Db");
 

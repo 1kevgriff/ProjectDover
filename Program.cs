@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
+using Microsoft.Extensions.Configuration;
+using MongoDB.Driver;
 
 namespace ProjectDover
 {
@@ -9,11 +9,18 @@ namespace ProjectDover
     {
         static private void Main(string[] args)
         {
+            var _config = GetConfig();
+
             GameType gameType = Introduction();
+            string playerName = PlayerCreation();
 
             var parser = new CommandParser();
-            var GameSession = new GameSession(gameType);
-           
+            var GameSession = new GameSession(gameType, playerName);
+
+            if(gameType == GameType.LOADED_GAME){
+                Console.WriteLine(GameSession.Summary() + Environment.NewLine);
+                Console.WriteLine(GameSession.RoomManager.CurrentRoomDescription);
+            }
 
             while (true)
             {
@@ -82,6 +89,12 @@ namespace ProjectDover
                             Console.WriteLine(GameSession.Summary());
                         }
                         break;
+                    case Command.COMMAND_SAVE:
+                    {
+                        var connStr = _config["Blind2021DatabaseSettings:ConnectionString"];
+                        Console.WriteLine(GameSession.SaveGame(connStr));
+                    }
+                    break;
                     case Command.COMMAND_HANDLED: break;
                     default:
                         {
@@ -96,18 +109,57 @@ namespace ProjectDover
         static private GameType Introduction(){
 
             Console.Clear();
-            Console.WriteLine("-=Welcome to Blind2021=-");
-            Console.WriteLine("This is a text based adventure game... as you can see ;)");
+            Console.WriteLine("-=- Welcome to Blind2021 -=-");
+
+            Console.Write(File.ReadAllText(@".\medias\blind2021-ascii.txt")); 
+            Console.WriteLine(Environment.NewLine);
+            Console.WriteLine("This is a text based adventure game...");
 
             Console.WriteLine("Do you want to:");
             Console.WriteLine("1 - Start a New Game.");
-            Console.WriteLine("2 - Load a Saved Game.");
+
+            var client = new MongoClient("mongodb://localhost:27017");
+            if(client != null)
+                Console.WriteLine("2 - Load a Saved Game.");
             
+            Console.Write("> ");
             var inputString = Console.ReadLine();
 
             var selectedGameType = GameTypeParser.ProcessGameTypeText(inputString);
+            Console.WriteLine(Environment.NewLine);
 
             return selectedGameType;
         }
+
+        public static IConfigurationRoot GetConfig(){
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+
+            return builder.Build();
+        }
+
+        public static string PlayerCreation(){
+
+            bool validName = false;
+            string inputString = string.Empty;
+
+            while(!validName)
+            {
+                Console.WriteLine("How should I call you?");
+                Console.Write("> ");
+                inputString = Console.ReadLine();
+
+                if(inputString.Length >= 5){
+                    validName = true;
+                }
+            }
+
+            Console.WriteLine(String.Format("Happy to have you with us {0}, now let's get started.", inputString));
+            Console.WriteLine(Environment.NewLine);
+
+            return inputString;
+        }
+
     }
 }
