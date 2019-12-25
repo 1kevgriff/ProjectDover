@@ -23,9 +23,9 @@ Fork, then clone the repo:
 
     git clone git@github.com:your-username/ProjectDover.git
 
-Push to your fork and [submit a pull request](https://github.com/fboucher/ProjectDover/compare/) against the `dev` branch.
+Push to your fork and [submit a pull request](https://github.com/1kevgriff/ProjectDover/compare/) against the `dev` branch.
 
-At this point you're waiting on us. We like to at least comment on pull requests within three-five days. We may suggest some changes or improvements or alternatives.
+At this point you're waiting on us. We like to at least comment on pull requests within three days (and, typically, one day). We may suggest some changes or improvements or alternatives.
 
 Some things that will increase the chance that your pull request is accepted:
 
