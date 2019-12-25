@@ -5,10 +5,12 @@
 
 ![Image of a man wearing black glasses behind a laptop](medias/Text-Based-Game_800.png)
 
-Kevin's & Frank's attempt to write a classic adventure with modern tools.
+Kevin's & Frank's attempt to write a classic adventure with modern tools. Coded with **.Net Core v 3.1**, the project can be open with any [Visual Studio, Visual Studio Code](https://visualstudio.microsoft.com/) (and other editors).
+
 
 ## The idea
 A text-based adventure game, in a near-future where you and your glasses companion are exploring your environment.  We will use AI to simplify the commands. This way "take flashlight" could be "grab the light", "pick up the flashlight"; accept more "humans" commands and the AI will translate to game commands. 
+
 
 ### Thoughts 
 - You are blind
@@ -20,15 +22,33 @@ A text-based adventure game, in a near-future where you and your glasses compani
 - The game can be played on-prem or from a webpage
 - Multi-languages: English, French, etc.
 
-## Work Status / Board
 
-You would like to know what features are done, or witch one we are working on? Check out the [Glo board](https://app.gitkraken.com/glo/board/XaCFs0AaCAAPfDsT).
+## F.A.Q.
+
+#### Q: How to install?
+
+R: Right now there is no installation or binary published. You will need to compile the project by yourself.
+
+#### Q: What are the requirements?
+
+R: To be able to compile the project you will need:
+  - [Visual Studio IDE or Visual Studio Code](https://visualstudio.microsoft.com/)
+  - [.Net Core v3.1 LTS](https://dotnet.microsoft.com/download)
+  - To be able to save you will need access to a MongoDB.
+
+
 
 ## Contributing
 
-Want to contribute? This project welcomes contributions and suggestions. 
+If you find a bug or would like to add a feature, check out those resources:
 
-[more to come.]
+- To see the current work in progress [Glo board](https://app.gitkraken.com/glo/board/XaCFs0AaCAAPfDsT) or the [Issues page](https://github.com/FBoucher/ProjectDover/issues) on GitHub.
+
+- This project is build during live streaming session with the community on [Twitch](https://www.twitch.tv/fboucheros). You can see the complete list of all past sessions [here](https://github.com/FBoucher/stream-projects#blind2021-aka-project-dover) 
+
+- Check out our [Code of Conduct](CODE_OF_CONDUCT.md) and [Contributing](CONTRIBUTING.md) docs. This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification.  Contributions of any kind welcome!
+
+
 ## Contributors ✨
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
