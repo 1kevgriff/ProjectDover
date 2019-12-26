@@ -23,11 +23,13 @@ A text-based adventure game, in a near-future where you and your glasses compani
 - Multi-languages: English, French, etc.
 
 
+
 ## F.A.Q.
 
 #### Q: How to install?
 
 R: Right now there is no installation or binary published. You will need to compile the project by yourself.
+
 
 #### Q: What are the requirements?
 
@@ -37,6 +39,18 @@ R: To be able to compile the project you will need:
   - To be able to save you will need access to a MongoDB.
 
 
+#### Q: Can I play without the (MongoDB) database?
+
+R: Yes. Right now the database is only use to save game, and load saved games.
+
+
+#### Q: How can I **import a custom map**? 
+
+R: Use `.\data\BradysHouse\rooms.json` as an example. Right now, to *play* a custom map you need to replace the file `BradysHouse\rooms.json`. However, soon it should be possible to load any map. The pattern should be a folder (named as your map's name) and a file rooms.json. And a list of maps will be listed in settings.
+
+#### Q: What the gameplay look like?
+
+R: ![gameplay](medias/gameplay_sc.png)
 
 ## Contributing
 
@@ -44,7 +58,10 @@ If you find a bug or would like to add a feature, check out those resources:
 
 - To see the current work in progress [Glo board](https://app.gitkraken.com/glo/board/XaCFs0AaCAAPfDsT) or the [Issues page](https://github.com/FBoucher/ProjectDover/issues) on GitHub.
 
+  ![Glo board](medias/GLO-board-sc.png)
+
 - This project is build during live streaming session with the community on [Twitch](https://www.twitch.tv/fboucheros). You can see the complete list of all past sessions [here](https://github.com/FBoucher/stream-projects#blind2021-aka-project-dover) 
+  
 
 - Check out our [Code of Conduct](CODE_OF_CONDUCT.md) and [Contributing](CONTRIBUTING.md) docs. This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification.  Contributions of any kind welcome!
 
