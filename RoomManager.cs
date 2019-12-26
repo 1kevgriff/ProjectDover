@@ -1,67 +1,78 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text.Json;
+using MongoDB.Driver;
 
 namespace ProjectDover
 {
     public class RoomManager
     {
-        private List<Room> Rooms { get; set; }
-        private long CurrentRoomId { get; set; }
+        public List<Room> Rooms { get; set; }
+        public string CurrentRoomId { get; set; }
         private Room CurrentRoom { get { return Rooms.First(p => p.Id == CurrentRoomId); } }
 
         private int visitedRoomCounter { get; set; }
 
-        public RoomManager()
+        public RoomManager(GameType gametype)
         {
-            CurrentRoomId = 0;
+            CurrentRoomId = "0";
 
             Rooms = new List<Room>();
-            Rooms.Add(new Room()
-            {
-                Id = 0,
-                Name = "Outside Brady's House",
-                Description = "Brady has an extremely loved home.  There are even trees and flowers.  On your left, there is a truck up on some blocks.",
-                Exits = new List<Exit>() { new Exit() { Direction = Direction.North, TargetRoomId = 1 } }
-            });
-            Rooms.Add(new Room()
-            {
-                Id = 1,
-                Name = "Inside Brady's House",
-                Description = "The inside is even nicer than the outside.  $4000 of electronic equipment sit on a table.",
-                Exits = new List<Exit>() {  new Exit() { Direction = Direction.South, TargetRoomId = 0 },
-                                            new Exit() { Direction = Direction.East, TargetRoomId = 2 },
-                                            new Exit() { Direction = Direction.West, TargetRoomId = 3 } }
-            });
-            Rooms.Add(new Room()
-            {
-                Id = 2,
-                Name = "Living Room",
-                Description = "Nice cozy living room. On the North wall there is a mirror. And a flashlight on the table in the middle of the room.",
-                Exits = new List<Exit>() { new Exit() { Direction = Direction.West, TargetRoomId = 1 } },
-                Inventory = new Inventory("Living Room")
-                {
-                    Items = new List<Item>(){
-                            new Item() { Name = "Mirror", Description = "Regular mirror, where you can see yourself."},
-                            new Item() { Name = "flashlight",
-                                         Description = "Regular basic flashlight.",
-                                         Triggers = new Dictionary<string,string>() {{"take","noFlashlight"}},
-                                         KeyEvents = new Dictionary<string,string>() {{"take","You found the Flashlight."}}
-                                        }
-                    }
-                },
-                PotentialDescription = new Dictionary<string, string>() {
-                    {"noFlashlight", "Nice cozy living room. On the North wall there is a mirror. And a the table in the middle of the room."}
-                }
-                //TODO: trigger character creation event!
-            });
-            Rooms.Add(new Room()
-            {
-                Id = 3,
-                Name = "Master Bedroom",
-                Description = "Nice luxurious bedroom. The perfect place for Brady to rest and retreive his voice.",
-                Exits = new List<Exit>() { new Exit() { Direction = Direction.East, TargetRoomId = 1 } }
-            });
+            // Rooms.Add(new Room()
+            // {
+            //     Id = "0",
+            //     Name = "Outside Brady's House",
+            //     Description = "Brady has an extremely loved home.  There are even trees and flowers.  On your left, there is a truck up on some blocks.",
+            //     Exits = new List<Exit>() { new Exit() { Direction = Direction.North, TargetRoomId = "1" } }
+            // });
+            // Rooms.Add(new Room()
+            // {
+            //     Id = "1",
+            //     Name = "Inside Brady's House",
+            //     Description = "The inside is even nicer than the outside.  $4000 of electronic equipment sit on a table.",
+            //     Exits = new List<Exit>() {  new Exit() { Direction = Direction.South, TargetRoomId = "999" },
+            //                                 new Exit() { Direction = Direction.East, TargetRoomId = "2" },
+            //                                 new Exit() { Direction = Direction.West, TargetRoomId = "3" } }
+            // });
+            // Rooms.Add(new Room()
+            // {
+            //     Id = "2",
+            //     Name = "Living Room",
+            //     Description = "Nice cozy living room. On the North wall there is a mirror. And a flashlight on the table in the middle of the room.",
+            //     Exits = new List<Exit>() { new Exit() { Direction = Direction.West, TargetRoomId = "1" } },
+            //     Inventory = new Inventory("Living Room")
+            //     {
+            //         Items = new List<Item>(){
+            //                 new Item() { Name = "Mirror", Description = "Regular mirror, where you can see yourself."},
+            //                 new Item() { Name = "flashlight",
+            //                              Description = "Regular basic flashlight.",
+            //                              Triggers = new Dictionary<string,string>() {{"take","noFlashlight"}},
+            //                              KeyEvents = new Dictionary<string,string>() {{"take","You found the Flashlight."}}
+            //                             }
+            //         }
+            //     },
+            //     PotentialDescription = new Dictionary<string, string>() {
+            //         {"noFlashlight", "Nice cozy living room. On the North wall there is a mirror. And a the table in the middle of the room."}
+            //     }
+            //     //TODO: trigger character creation event!
+            // });
+            // Rooms.Add(new Room()
+            // {
+            //     Id = "3",
+            //     Name = "Master Bedroom",
+            //     Description = "Nice luxurious bedroom. The perfect place for Brady to rest and retreive his voice.",
+            //     Exits = new List<Exit>() { new Exit() { Direction = Direction.East, TargetRoomId = "1" } }
+            // });
+
+            if(gametype == GameType.LOADED_GAME){
+                LoadMap();
+            }
+            else{
+                var jsonRooms = File.ReadAllText(@".\data\BradysHouse\rooms.json");
+                Rooms = JsonSerializer.Deserialize<List<Room>>(jsonRooms);
+            }
         }
 
         public string CurrentRoomName => CurrentRoom.Name;
@@ -71,8 +82,11 @@ namespace ProjectDover
         {
             get
             {
-                CurrentRoom.HasSeenDescription = true;
-                visitedRoomCounter++;
+                if(! CurrentRoom.HasSeenDescription)
+                {
+                    CurrentRoom.HasSeenDescription = true;
+                    visitedRoomCounter++;
+                }
                 return CurrentRoom.Description;
             }
         }
@@ -159,5 +173,33 @@ namespace ProjectDover
 
             return "It looks like you just start. No map coverage available yet.";
         }
+
+
+        public void SaveMap(){
+
+            IMongoCollection<Room> _rooms;
+            //var connStr = _config["Blind2021DatabaseSettings:ConnectionString"];
+            var client = new MongoClient("mongodb://localhost:27017");
+            var database = client.GetDatabase("Blind2021Db");
+
+            _rooms = database.GetCollection<Room>("Rooms");
+
+            foreach(var room in Rooms){
+                _rooms.InsertOne(room);
+            }
+        }
+
+        public void LoadMap(){
+
+            IMongoCollection<Room> _rooms;
+            
+            var client = new MongoClient("mongodb://localhost:27017");
+            var database = client.GetDatabase("Blind2021Db");
+
+            _rooms = database.GetCollection<Room>("Rooms");
+
+            Rooms =  _rooms.Find(room => true).ToList();
+        }
+
     }
 }

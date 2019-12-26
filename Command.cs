@@ -12,7 +12,8 @@ namespace ProjectDover
         COMMAND_LOOK,
         COMMAND_TAKE,
         COMMAND_INVENTORY,
-        COMMAND_SUMMARY
+        COMMAND_SUMMARY,
+        COMMAND_SAVE
     
     }
 }
